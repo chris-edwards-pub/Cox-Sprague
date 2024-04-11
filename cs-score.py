@@ -23,12 +23,40 @@ cox_sprague_table = [
     [52, 51]
 ]
 
-# Since the table is expected to be a 100x20 array, we would need to extend
-# the above matrix with the remaining data. Assuming we have the rest of the data,
-# the full matrix would be 100 rows, with each row having up to 20 columns.
-# Fill in the missing data as required to complete the table.
-# https://www.shieldsfleetone.org/Cox-Sprague_Scoring.htm
+"""
+Since the table is expected to be a 100x20 array, we would need to extend
+the above matrix with the remaining data. Assuming we have the rest of the data,
+the full matrix would be 100 rows, with each row having up to 20 columns.
+Fill in the missing data as required to complete the table.
 
+https://www.shieldsfleetone.org/Cox-Sprague_Scoring.htm
+
+Cox-Sprague Table
+Place                 Number of Starters
+         2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+
+ 1      10 31 43 52 60 66 72 76 80 84 87 90 92 94 96 97 98 99 100
+ 2       7 25 37 46 54 60 66 70 74 78 81 84 86 88 90 91 92 93 94
+ 3       5 21 33 42 50 56 62 66 70 74 77 80 82 84 86 87 88 89 90
+ 4       . 17 29 38 46 52 58 62 66 70 73 76 78 80 82 83 84 85 86
+ 5       .  . 26 35 43 49 55 59 63 67 70 73 75 77 79 80 81 82 83
+ 6       .  .  . 32 40 46 52 56 60 64 67 70 72 74 76 77 78 79 80
+ 7       .  .  .  . 38 44 50 54 58 62 65 68 70 72 74 75 76 77 78
+ 8       .  .  .  .  . 42 48 52 56 60 63 66 68 70 72 73 74 75 76
+ 9       .  .  .  .  .  . 46 50 54 58 61 64 66 68 70 71 72 73 74
+10       .  .  .  .  .  .  . 48 52 56 59 62 64 66 68 69 70 71 72
+11       .  .  .  .  .  .  .  . 50 54 57 60 62 64 66 67 68 69 70
+12       .  .  .  .  .  .  .  .  . 52 55 58 60 62 64 65 66 67 68
+13       .  .  .  .  .  .  .  .  .  . 53 56 58 60 62 63 64 65 66
+14       .  .  .  .  .  .  .  .  .  .  . 55 57 59 61 62 63 64 65
+15       .  .  .  .  .  .  .  .  .  .  .  . 56 58 60 61 62 63 64
+16       .  .  .  .  .  .  .  .  .  .  .  .  . 57 59 60 61 62 63
+17       .  .  .  .  .  .  .  .  .  .  .  .  .  . 58 59 60 61 62
+18       .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58 59 60 61
+19       .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58 59 60
+20       .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58 59
+21       .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58
+"""
 def csScore(resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=None, nDiscards=0):
     nx = 0  # counter of number of races started by the boat being scored
     xTot = 0  # running C-S score total

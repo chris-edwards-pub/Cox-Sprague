@@ -20,7 +20,7 @@ cox_sprague_table = [
     [58, 57, 56, 55, 54],
     [56, 55, 54, 53],
     [54, 53, 52],
-    [52, 51]
+    [52, 51],
 ]
 
 """
@@ -57,7 +57,11 @@ Place                 Number of Starters
 20       .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58 59
 21       .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . 58
 """
-def csScore(resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=None, nDiscards=0):
+
+
+def csScore(
+    resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=None, nDiscards=0
+):
     nx = 0  # counter of number of races started by the boat being scored
     xTot = 0  # running C-S score total
     pTot = 0  # running C-S "perfect" total
@@ -72,22 +76,24 @@ def csScore(resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=No
                 r = result
             else:  # Handling special cases as strings
                 r = ns + 1  # Default scoring for DSQ/DNF/etc.
-                if result in ['DNS', 'DNC']:  # Ignore DNS/DNC
+                if result in ["DNS", "DNC"]:  # Ignore DNS/DNC
                     continue
             # Adjust score based on the Cox-Sprague table
-            z = CoxSpragueTable[r-1][c-1]  # Adjusted for Python's 0-based indexing
+            z = CoxSpragueTable[r - 1][c - 1]  # Adjusted for Python's 0-based indexing
             nx += 1
             xv.append(z)
             xTot += z
-            pv.append(CoxSpragueTable[0][c-1])  # Score for winning
-            pTot += CoxSpragueTable[0][c-1]
+            pv.append(CoxSpragueTable[0][c - 1])  # Score for winning
+            pTot += CoxSpragueTable[0][c - 1]
 
     # Calculate Cox-Sprague percentage of perfection before discards
     cs = xTot / pTot if pTot > 0 else 0
 
     # Handle discards if necessary
     for _ in range(min(nDiscards, nx - 1)):
-        discard_improvements = [(xTot - x) / (pTot - p) if pTot - p > 0 else 0 for x, p in zip(xv, pv)]
+        discard_improvements = [
+            (xTot - x) / (pTot - p) if pTot - p > 0 else 0 for x, p in zip(xv, pv)
+        ]
         im = np.argmax(discard_improvements)  # Index of the worst race to discard
         if discard_improvements[im] >= cs:
             xTot -= xv[im]
@@ -95,6 +101,7 @@ def csScore(resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=No
             xv[im] = 0  # Mark as discarded
 
     return cs
+
 
 def csTable1(r, c, modified=True):
     # Simplified version, needs to be filled with actual Cox-Sprague table data
@@ -105,13 +112,16 @@ def csTable1(r, c, modified=True):
     table = np.full((100, 20), fill_value=0.0)  # Dummy table, replace with actual data
     # Calculate and return value from the table
     # Add logic here to match the VBA function's behavior
-    return table[r-1][c-1]
+    return table[r - 1][c - 1]
+
 
 # Example usage:
-resultsVector = [1, 2, 'DSQ', 4]  # Example data
+resultsVector = [1, 2, "DSQ", 4]  # Example data
 nStartersVector = [5, 10, 15, 20]
 cox_sprague_table
 nFinishersVector = [4, 9, 14, 19]  # Example data
 
-score = csScore(resultsVector, nStartersVector, cox_sprague_table, nFinishersVector, nDiscards=1)
+score = csScore(
+    resultsVector, nStartersVector, cox_sprague_table, nFinishersVector, nDiscards=1
+)
 print(f"Cox-Sprague Score: {score}")

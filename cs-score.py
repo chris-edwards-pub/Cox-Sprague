@@ -27,6 +27,7 @@ cox_sprague_table = [
 # the above matrix with the remaining data. Assuming we have the rest of the data,
 # the full matrix would be 100 rows, with each row having up to 20 columns.
 # Fill in the missing data as required to complete the table.
+# https://www.shieldsfleetone.org/Cox-Sprague_Scoring.htm
 
 def csScore(resultsVector, nStartersVector, CoxSpragueTable, nFinishersVector=None, nDiscards=0):
     nx = 0  # counter of number of races started by the boat being scored
